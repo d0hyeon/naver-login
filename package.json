@@ -1,0 +1,40 @@
+{
+  "name": "@dohyeon/naver-login",
+  "description": "네이버 로그인 컴포넌트",
+  "keywords": [
+    "naver",
+    "네이버",
+    "naver login",
+    "네이버 로그인"
+  ],
+  "version": "0.0.7",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.15",
+    "@types/styled-components": "^5.1.1",
+    "react": "^16.12.0",
+    "rollup": "^2.21.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.3",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "styled-components": "^5.1.1",
+    "typescript": "^3.9.6"
+  },
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "bugs": {
+    "email": "ehgus6887@gmail.com"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "김도현",
+    "email": "ehgus6887@gmail.com"
+  }
+}

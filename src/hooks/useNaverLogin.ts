@@ -71,7 +71,6 @@ const useNaverLogin = ({
   }, []);
   
   return {
-    loading: !isLoadedScript,
     naverLogin,
     naverLoginInit,
   }

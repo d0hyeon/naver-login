@@ -52,6 +52,7 @@ or
 import {useNaverLogin} from '@dohyeon/react-naver-login';
 
 const Login = () => {
+    // loading is a boolean value for no script 
     const {naverLoginInit, loading} = useNaverLogin({
         clientId: "..."
         callbackUrl: "..."
@@ -59,9 +60,7 @@ const Login = () => {
         callbackHandle: true | false
     });
 
-    if(!loading) {
-        naverLoginInit();
-    }
+    const naverLoginInstance = naverLoginInit();
 
     return (
         <>
@@ -78,24 +77,30 @@ const Login = () => {
 import {useNaverLogin} from '@dohyeon/react-naver-login';
 
 const LoginAuth = () => {
-    const {naverLoginInit, loading} = useNaverLogin({
+    const {naverLoginInit} = useNaverLogin({
         clientId: "..."
         callbackUrl: "..."
         isPopup: true | false,
         callbackHandle: true | false
     });
     
-    if(!loading) {
-        const naverLoginInstance = naverLoginInit();
+    const naverLoginInstance = naverLoginInit();
+    
+    React.useEffect(() => {
+        const naverLoginCallback = () => {
+            naverLoginInstance.getLoginStatus(status => {
+                if(status) {
+                    console.log('success!');
+                } else {
+                    console.log('fail!');
+                }
+            })
+        }
 
-        naverLoginInstance.getLoginStatus(status => {
-            if(status) {
-                console.log('success!');
-            } else {
-                console.log('fail!');
-            }
-        })
-    }
+        window.addEventListener('load', naverLoginCallback);
+
+        return () => window.removeEventListener('load', naverLoginCallback);
+    }, [])
 }
 
 ```

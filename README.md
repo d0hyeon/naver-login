@@ -7,16 +7,6 @@
 
 ## Example
 
-### HTML 
-```html
-    <body>
-        <script 
-            src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" 
-            type="text/javascript"
-        ></script>
-    </body>
-```
-
 ### Component
 
 ```jsx
@@ -46,6 +36,16 @@ or
 
 ### Hooks
 
+#### HTML 
+```html
+    <body>
+        <script 
+            src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" 
+            type="text/javascript"
+        ></script>
+    </body>
+```
+
 #### LoginPage.jsx
 
 ```jsx
@@ -58,9 +58,6 @@ const Login = () => {
         isPopup: true | false,
         callbackHandle: true | false
     });
-
-    // loading<boolean> -> script loading value
-    // https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js
 
     if(!loading) {
         naverLoginInit();

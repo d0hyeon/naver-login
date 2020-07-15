@@ -10,7 +10,7 @@
 
 ```jsx
 
-import NaverLogin from '@dohyeon/naver-login';
+import NaverLogin from '@dohyeon/react-naver-login';
 
 <NaverLogin
     clientId="..."
@@ -38,7 +38,7 @@ or
 #### LoginPage.jsx
 
 ```jsx
-import {useNaverLogin} from '@dohyeon/naver-login';
+import {useNaverLogin} from '@dohyeon/react-naver-login';
 
 const Login = () => {
     const {naverLoginInit, loading} = useNaverLogin({
@@ -67,7 +67,7 @@ const Login = () => {
 #### callbackPage.jsx
 
 ```jsx
-import {useNaverLogin} from '@dohyeon/naver-login';
+import {useNaverLogin} from '@dohyeon/react-naver-login';
 
 const LoginAuth = () => {
     const {naverLoginInit, loading} = useNaverLogin({

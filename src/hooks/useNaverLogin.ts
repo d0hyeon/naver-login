@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {INaverLoginProperties} from '../@types/naverLogin';
+import {NAVER_SCRIPT_SRC} from './../lib/constants';
+import loopTimeout from '../lib/loopTimeout';
 
 declare global {
   interface Window {
@@ -7,8 +9,6 @@ declare global {
   }
 }
  
-const NAVER_SCRIPT_SRC = 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js';
-
 const createScript = (callback?: () => void) => {
   const script = document.createElement('script');
   script.src = NAVER_SCRIPT_SRC;
@@ -18,6 +18,8 @@ const createScript = (callback?: () => void) => {
   document.body.appendChild(script);
 };
 
+const getIsNaverLoaded = () => window.naver.LoginWithNaverId ? true : false;
+
 const useNaverLogin = ({
   clientId,
   callbackUrl,
@@ -25,7 +27,7 @@ const useNaverLogin = ({
   loginButton = {color: "green", type: 2, height: 42},
   callbackHandle = true
 }: INaverLoginProperties) => {
-  const [isLoadedScript, setIsLoadedScript] = React.useState<boolean>(window.naver.LoginWithNaverId ? true : false);
+  const [isLoadedScript, setIsLoadedScript] = React.useState<boolean>(getIsNaverLoaded);
   const naverLogin = React.useMemo(() => {
     if(window.naver.LoginWithNaverId) {
       return new window.naver.LoginWithNaverId(
@@ -54,7 +56,14 @@ const useNaverLogin = ({
   React.useEffect(() => {
     if(!isLoadedScript) {
       createScript(() => {
-        setIsLoadedScript(true);
+        loopTimeout(() => {
+          if(getIsNaverLoaded()) {
+            setIsLoadedScript(true);
+            return true;
+          } 
+
+          return false;
+        }, 300);
       });
     }
   }, []);

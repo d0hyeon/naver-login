@@ -2,7 +2,7 @@
 # NAVER LOGIN
 
 ```
-    yarn add @dohyeon/naver-login
+    yarn add @dohyeon/react-naver-login
 ```
 
 

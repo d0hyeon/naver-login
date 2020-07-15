@@ -9,6 +9,8 @@ declare global {
   }
 }
  
+
+
 const createScript = (callback?: () => void) => {
   const script = document.createElement('script');
   script.src = NAVER_SCRIPT_SRC;
@@ -27,7 +29,7 @@ const useNaverLogin = ({
   loginButton = {color: "green", type: 2, height: 42},
   callbackHandle = true
 }: INaverLoginProperties) => {
-  const [isLoadedScript, setIsLoadedScript] = React.useState<boolean>(getIsNaverLoaded);
+  const [isLoadedScript, setIsLoadedScript] = React.useState<boolean>(getIsNaverLoaded());
   const naverLogin = React.useMemo(() => {
     if(window.naver.LoginWithNaverId) {
       return new window.naver.LoginWithNaverId(

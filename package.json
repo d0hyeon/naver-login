@@ -39,5 +39,8 @@
   "author": {
     "name": "김도현",
     "email": "ehgus6887@gmail.com"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

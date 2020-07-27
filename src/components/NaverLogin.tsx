@@ -36,7 +36,6 @@ const NaverLogin: React.FC<INaverLoginProps> = ({
     isPopup,
     callbackHandle
   }) || {};
-  console.log(naverLoginInit, loading)
   if(!loading) {
     naverLoginInit && naverLoginInit();
   }

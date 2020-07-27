@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {INaverLoginProperties} from '../@types/naverLogin';
 import {NAVER_SCRIPT_SRC} from './../lib/constants';
-import useWindowLoad from './useWindowLoad';
 import loopTimeout from '../lib/loopTimeout';
 
 declare global {

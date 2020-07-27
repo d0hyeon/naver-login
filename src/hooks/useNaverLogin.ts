@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {INaverLoginProperties} from '../@types/naverLogin';
 import {NAVER_SCRIPT_SRC} from './../lib/constants';
+import useWindowLoad from './useWindowLoad';
 import loopTimeout from '../lib/loopTimeout';
 
 declare global {
@@ -9,7 +10,15 @@ declare global {
   }
 }
  
+type TNaverLogin = any;
 
+interface IUserNaverLoginResult {
+  loading: boolean;
+  naverLogin: TNaverLogin;
+  naverLoginInit: TNaverLogin
+}
+
+type TUserNaverLogin = (parameter: INaverLoginProperties) => null | IUserNaverLoginResult;
 
 const createScript = (callback?: () => void) => {
   const script = document.createElement('script');
@@ -22,13 +31,16 @@ const createScript = (callback?: () => void) => {
 
 const getIsNaverLoaded = () => window.naver.LoginWithNaverId ? true : false;
 
-const useNaverLogin = ({
+const useNaverLogin:TUserNaverLogin = ({
   clientId,
   callbackUrl,
   isPopup,
   loginButton = {color: "green", type: 2, height: 42},
   callbackHandle = true
-}: INaverLoginProperties) => {
+}) => {
+  if(!('browser' in process)) {
+    return null;
+  }
   const [isLoadedScript, setIsLoadedScript] = React.useState<boolean>(getIsNaverLoaded());
   const naverLogin = React.useMemo(() => {
     if(window.naver.LoginWithNaverId) {

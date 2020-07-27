@@ -25,16 +25,20 @@ const NaverLogin: React.FC<INaverLoginProps> = ({
   callbackHandle = true,
   children
 }) => {
+  if(!('browser' in process)) {
+    return null;
+  }
+  
   const {naverLoginInit, loading} = useNaverLogin({
     clientId,
     callbackUrl,
     loginButton,
     isPopup,
     callbackHandle
-  });
+  }) || {};
 
   if(!loading) {
-    naverLoginInit();
+    naverLoginInit && naverLoginInit();
   }
   
   const buttonRef:IRefObject<HTMLDivElement> = React.useRef(null);

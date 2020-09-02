@@ -63,7 +63,9 @@ const Login = () => {
     callbackHandle: true | false
   });
 
-  const naverLoginInstance = naverLoginInit();
+  if(!loading) {
+    naverLoginInit();
+  }
 
   return (
     <div id="naverIdLogin"/>

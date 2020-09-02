@@ -58,9 +58,7 @@ const useNaverLogin:TUserNaverLogin = ({
   }, [isLoadedScript]);
 
   const naverLoginInit = React.useCallback(() => {
-    setTimeout(() => {
-      naverLogin && naverLogin.init()
-    }, 0);
+    naverLogin && naverLogin.init()
     
     return naverLogin;
   }, [isLoadedScript, naverLogin]);
@@ -76,7 +74,7 @@ const useNaverLogin:TUserNaverLogin = ({
           } 
 
           return false;
-        }, 300);
+        }, 500);
       });
     }
   }, []);

@@ -10,7 +10,7 @@
     "네이버",
     "네이버 로그인"
   ],
-  "version": "0.0.3-1",
+  "version": "0.0.3-2",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "peerDependencies": {
@@ -34,6 +34,10 @@
   },
   "bugs": {
     "email": "ehgus6887@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d0hyeon/naver-login"
   },
   "license": "ISC",
   "author": {

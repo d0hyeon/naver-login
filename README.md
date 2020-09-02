@@ -6,37 +6,9 @@
 ```
 
 ## Example
+<br/><br/>
+### HTML `(optional)`
 
-### Component
-
-```jsx
-
-import NaverLogin from '@dohyeon/react-naver-login';
-
-<NaverLogin
-    clientId="..."
-    callbackUrl="..."
-    isPopup={true | false}
-    callbackHandle={true | false}
->
-    <button>Login!</button>
-</NaverLogin>
-
-or
-
-<NaverLogin
-    clientId="..."
-    callbackUrl="..."
-    isPopup={true | false}
-    callbackHandle={true | false}
-    loginButton={{color: string, type: 1 | 2 | 3, height: number}}
-/>
-
-```
-
-### Hooks
-
-#### HTML 
 ```html
     <body>
         <script 
@@ -45,62 +17,86 @@ or
         ></script>
     </body>
 ```
+<br/>
 
-#### LoginPage.jsx
+### Component
+
+```jsx
+
+import NaverLogin from '@dohyeon/react-naver-login';
+
+<NaverLogin
+  clientId="..."
+  callbackUrl="..."
+  isPopup={true | false}
+  callbackHandle={true | false}
+>
+  <button>Login!</button>
+</NaverLogin>
+
+or
+
+<NaverLogin
+  clientId="..."
+  callbackUrl="..."
+  isPopup={true | false}
+  callbackHandle={true | false}
+  loginButton={{color: string, type: 1 | 2 | 3, height: number}}
+/>
+
+```
+<br/>
+
+### Hooks
+
+**LoginPage.jsx**
 
 ```jsx
 import {useNaverLogin} from '@dohyeon/react-naver-login';
 
 const Login = () => {
-    // loading is a boolean value for no script 
-    const {naverLoginInit, loading} = useNaverLogin({
-        clientId: "..."
-        callbackUrl: "..."
-        isPopup: true | false,
-        callbackHandle: true | false
-    });
+  // loading is a boolean value for no naver sdk script 
+  const {naverLoginInit, loading} = useNaverLogin({
+    clientId: "..."
+    callbackUrl: "..."
+    isPopup: true | false,
+    callbackHandle: true | false
+  });
 
-    const naverLoginInstance = naverLoginInit();
+  const naverLoginInstance = naverLoginInit();
 
-    return (
-        <>
-            <div id="naverIdLogin"/>
-        </>
-    )
+  return (
+    <div id="naverIdLogin"/>
+  )
 }
 
 ```
 
-#### callbackPage.jsx
+**callbackPage.jsx**
 
 ```jsx
 import {useNaverLogin} from '@dohyeon/react-naver-login';
 
 const LoginAuth = () => {
-    const {naverLoginInit} = useNaverLogin({
-        clientId: "..."
-        callbackUrl: "..."
-        isPopup: true | false,
-        callbackHandle: true | false
-    });
-    
-    const naverLoginInstance = naverLoginInit();
-    
-    React.useEffect(() => {
-        const naverLoginCallback = () => {
-            naverLoginInstance.getLoginStatus(status => {
-                if(status) {
-                    console.log('success!');
-                } else {
-                    console.log('fail!');
-                }
-            })
+  const {naverLoginInit, loading} = useNaverLogin({
+    clientId: "..."
+    callbackUrl: "..."
+    isPopup: true | false,
+    callbackHandle: true | false
+  });
+  
+  React.useEffect(() => {
+    if(!loading) {
+      const naverLoginInstance = naverLoginInit();
+      naverLoginInstance.getLoginStatus(status => {
+        if(status) {
+          console.log('success!');
+        } else {
+          console.log('fail!');
         }
-
-        window.addEventListener('load', naverLoginCallback);
-
-        return () => window.removeEventListener('load', naverLoginCallback);
-    }, [])
+      })
+    }
+  }, [loading]);
 }
 
 ```

@@ -13,8 +13,7 @@ type TNaverLogin = any;
 
 interface IUserNaverLoginResult {
   loading: boolean;
-  naverLogin: TNaverLogin;
-  naverLoginInit: TNaverLogin
+  naverLoginInit: () =>TNaverLogin
 }
 
 type TUserNaverLogin = (parameter: INaverLoginProperties) => null | IUserNaverLoginResult;
@@ -41,9 +40,10 @@ const useNaverLogin:TUserNaverLogin = ({
     return null;
   }
   const [isLoadedScript, setIsLoadedScript] = React.useState<boolean>(getIsNaverLoaded());
-  const naverLogin = React.useMemo(() => {
-    if(window.naver.LoginWithNaverId) {
-      return new window.naver.LoginWithNaverId(
+
+  const naverLoginInit = React.useCallback(() => {
+    if(getIsNaverLoaded()) {
+      const naverLogin = new window.naver.LoginWithNaverId(
         {
           clientId,
           callbackUrl,
@@ -52,17 +52,13 @@ const useNaverLogin:TUserNaverLogin = ({
           callbackHandle
         }
       );
-    }
 
+      naverLogin.init();
+      return naverLogin;
+    }
+    
     return null;
   }, [isLoadedScript]);
-
-  const naverLoginInit = React.useCallback(() => {
-    naverLogin && naverLogin.init()
-    
-    return naverLogin;
-  }, [isLoadedScript, naverLogin]);
-
 
   React.useEffect(() => {
     if(!isLoadedScript) {
@@ -81,7 +77,6 @@ const useNaverLogin:TUserNaverLogin = ({
   
   return {
     loading: !isLoadedScript,
-    naverLogin,
     naverLoginInit,
   }
 };

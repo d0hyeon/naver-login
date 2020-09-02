@@ -12,8 +12,13 @@ interface IRefObject<T> {
   readonly current: T | null;
 }
 
-const HiddenDiv = styled.div`
-  display: none;
+const NaverLoginDiv = styled.div<{hide: boolean}>`
+  ${({hide}) => hide && `
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+  `}
 `
 
 // @ts-ignore
@@ -36,15 +41,15 @@ const NaverLogin: React.FC<INaverLoginProps> = ({
     isPopup,
     callbackHandle
   }) || {};
-  if(!loading) {
+  
+  const buttonRef:IRefObject<HTMLDivElement> = React.useRef(null);
+  if(!loading && buttonRef.current) {
     naverLoginInit && naverLoginInit();
   }
   
-  const buttonRef:IRefObject<HTMLDivElement> = React.useRef(null);
-
   return (
     <>
-      {children ? (
+      {children && (
         <>
           <div
             onClick={() => {
@@ -57,18 +62,14 @@ const NaverLogin: React.FC<INaverLoginProps> = ({
           >
             {children}
           </div>
-          <HiddenDiv
-            className="test"
-          >
-            <div 
-              id="naverIdLogin"
-              ref={buttonRef}
-            />
-          </HiddenDiv>
         </>  
-      ) : (
-        <div id="naverIdLogin"/>
       )}
+      <NaverLoginDiv hide={!!children}>
+        <div 
+          id="naverIdLogin"
+          ref={buttonRef}
+        />
+      </NaverLoginDiv>
     </>
   )
 };

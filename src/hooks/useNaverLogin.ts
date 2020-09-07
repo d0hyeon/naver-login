@@ -29,6 +29,10 @@ const createScript = (callback?: () => void) => {
 
 const getIsNaverLoaded = () => window.naver.LoginWithNaverId ? true : false;
 
+if('browser' in process && !window.naver.LoginWithNaverId) {
+  createScript();
+}
+
 const useNaverLogin:TUserNaverLogin = ({
   clientId,
   callbackUrl,
@@ -61,9 +65,10 @@ const useNaverLogin:TUserNaverLogin = ({
   }, [isLoadedScript]);
 
   React.useEffect(() => {
+    let timerId: number = 0;
     if(!isLoadedScript) {
       createScript(() => {
-        loopTimeout(() => {
+        timerId = loopTimeout(() => {
           if(getIsNaverLoaded()) {
             setIsLoadedScript(true);
             return true;
@@ -73,6 +78,11 @@ const useNaverLogin:TUserNaverLogin = ({
         }, 500);
       });
     }
+
+    return () => {
+      timerId && clearTimeout(timerId);
+      setIsLoadedScript(true)
+    };
   }, []);
   
   return {

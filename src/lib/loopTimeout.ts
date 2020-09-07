@@ -1,5 +1,5 @@
 type TCallback = () => boolean;
-type TLoopTimeout = (callback: TCallback, timer?: number) => void;
+type TLoopTimeout = (callback: TCallback, timer?: number) => number;
 
 const MAX_LOOP_COUNT = 10;
 
@@ -10,7 +10,7 @@ const loopTimeout = ((_count: number) => {
   const loopTimeoutInner:TLoopTimeout = (callback, timer = 300) => {
     if(count > MAX_LOOP_COUNT) {
       clearTimeout(timerId);
-      return;
+      return timerId;
     }
 
     timerId = setTimeout(() => {
@@ -22,6 +22,8 @@ const loopTimeout = ((_count: number) => {
         }
       }
     }, timer);
+
+    return timerId;
   };
 
   return loopTimeoutInner;

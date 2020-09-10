@@ -7,7 +7,7 @@
 
 ## Example
 <br/><br/>
-### HTML `(required)`
+### HTML `(optional)`
 
 ```html
     <body>

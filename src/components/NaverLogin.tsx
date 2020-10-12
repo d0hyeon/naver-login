@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {INaverLoginProperties} from '../@types/naverLogin';
-import useNaverLogin from './../hooks/useNaverLogin';
+import useNaverLogin from '../hooks/useNaverLogin';
 
 
 interface INaverLoginProps extends INaverLoginProperties {
@@ -33,7 +33,7 @@ const NaverLogin: React.FC<INaverLoginProps> = ({
   if(!('browser' in process)) {
     return null;
   }
-  
+  const buttonRef:IRefObject<HTMLDivElement> = React.useRef(null);
   const {naverLoginInit, loading} = useNaverLogin({
     clientId,
     callbackUrl,
@@ -42,10 +42,12 @@ const NaverLogin: React.FC<INaverLoginProps> = ({
     callbackHandle
   }) || {};
   
-  const buttonRef:IRefObject<HTMLDivElement> = React.useRef(null);
-  if(!loading && buttonRef.current) {
-    naverLoginInit && naverLoginInit();
-  }
+
+  React.useEffect(() => {
+    if(!loading && buttonRef.current) {
+      naverLoginInit && naverLoginInit();
+    }
+  }, [loading, buttonRef]);
   
   return (
     <>

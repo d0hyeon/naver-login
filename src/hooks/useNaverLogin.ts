@@ -19,19 +19,20 @@ interface IUserNaverLoginResult {
 type TUserNaverLogin = (parameter: INaverLoginProperties) => null | IUserNaverLoginResult;
 
 const createScript = (callback?: () => void) => {
-  const script = document.createElement('script');
-  script.src = NAVER_SCRIPT_SRC;
-  script.onload = () => {
+  const currentScript = document.querySelector(`script[src='${NAVER_SCRIPT_SRC}']`);
+  const script: any = currentScript ?? document.createElement('script');
+  
+  if(!currentScript) {
+    script.src = NAVER_SCRIPT_SRC;
+    document.body.appendChild(script);
+  }
+
+  script.addEventListener('load', () => {
     callback && callback();
-  }  
-  document.body.appendChild(script);
+  });
 };
 
 const getIsNaverLoaded = () => window.naver.LoginWithNaverId ? true : false;
-
-if('browser' in process && !window.naver.LoginWithNaverId) {
-  createScript();
-}
 
 const useNaverLogin:TUserNaverLogin = ({
   clientId,
@@ -46,7 +47,7 @@ const useNaverLogin:TUserNaverLogin = ({
   const [isLoadedScript, setIsLoadedScript] = React.useState<boolean>(getIsNaverLoaded());
 
   const naverLoginInit = React.useCallback(() => {
-    if(getIsNaverLoaded()) {
+    if(isLoadedScript) {
       const naverLogin = new window.naver.LoginWithNaverId(
         {
           clientId,

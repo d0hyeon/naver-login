@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {INaverLoginProperties} from '../@types/naverLogin';
-import {NAVER_SCRIPT_SRC} from './../lib/constants';
+import {NAVER_SCRIPT_SRC} from '../lib/constants';
 import loopTimeout from '../lib/loopTimeout';
 
 declare global {
@@ -83,7 +83,7 @@ const useNaverLogin:TUserNaverLogin = ({
       timerId && clearTimeout(timerId);
       setIsLoadedScript(true)
     };
-  }, []);
+  }, [isLoadedScript]);
   
   return {
     loading: !isLoadedScript,

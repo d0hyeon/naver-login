@@ -3,15 +3,6 @@ import styled from 'styled-components';
 import {INaverLoginProperties} from '../@types/naverLogin';
 import useNaverLogin from '../hooks/useNaverLogin';
 
-
-interface INaverLoginProps extends INaverLoginProperties {
-  children?: React.ReactChildren;
-}
-
-interface IRefObject<T> {
-  readonly current: T | null;
-}
-
 const NaverLoginDiv = styled.div<{hide: boolean}>`
   ${({hide}) => hide && `
     width: 0;
@@ -21,8 +12,7 @@ const NaverLoginDiv = styled.div<{hide: boolean}>`
   `}
 `
 
-// @ts-ignore
-const NaverLogin: React.FC<INaverLoginProps> = ({
+const NaverLogin: React.FC<INaverLoginProperties> = ({
   clientId,
   callbackUrl,
   loginButton = {color: "green", type: 2, height: 42},
@@ -33,7 +23,7 @@ const NaverLogin: React.FC<INaverLoginProps> = ({
   if(!('browser' in process)) {
     return null;
   }
-  const buttonRef:IRefObject<HTMLDivElement> = React.useRef(null);
+  const buttonRef = React.useRef<HTMLDivElement>(null);
   const {naverLoginInit, loading} = useNaverLogin({
     clientId,
     callbackUrl,

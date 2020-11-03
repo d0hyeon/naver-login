@@ -7,6 +7,9 @@ import pkg from './package.json';
 
 export default {
   input: 'src/index.ts',
+  external: [
+    ...Object.keys(pkg.dependencies)
+  ],
   output: [
     {
       file: pkg.main,
@@ -33,6 +36,7 @@ export default {
     }),
     commonjs({
       include: ['node_modules/**'],
+      
     }),
   ],
 };
